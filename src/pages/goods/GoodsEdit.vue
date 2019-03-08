@@ -113,7 +113,7 @@ export default {
       dialogImageUrl: "",
       dialogVisible: false,
       categorys: "",
-      id:''
+      id: ""
     };
   },
   methods: {
@@ -139,8 +139,8 @@ export default {
         }
       });
     },
-    onCancel(){
-        this.$router.back();
+    onCancel() {
+      this.$router.back();
     },
     handleAvatarSuccess(res, file) {
       this.imageUrl = URL.createObjectURL(file.raw);
@@ -185,7 +185,13 @@ export default {
       if (status == 0) {
         this.form = message;
         this.imageUrl = message.imgList[0].url;
-        console.log(this.form.fileList)
+        console.log(this.form.fileList);
+        this.form.fileList = message.fileList.map(v => {
+          return {
+            ...v,
+            url: `http://localhost:8899` + v.shorturl
+          };
+        });
       }
     });
     this.$axios({
