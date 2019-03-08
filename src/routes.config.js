@@ -2,18 +2,38 @@ import Login from "./pages/Login.vue";
 import Admin from "./pages/Admin.vue";
 import GoodsList from "./pages/goods/GoodsList.vue";
 import CategoryList from "./pages/category/CategoryList.vue";
-
-var routes=[{
+import GoodListAdd from "./pages/goods/GoodListAdd.vue";
+import GoodsEdit from "./pages/goods/GoodsEdit.vue"
+var routes = [{
     path: "/",
     redirect: "/admin"
   },
   {
     path: "/admin",
-    redirect:"/admin/goods-list",
+    redirect: "/admin/goods-list",
     component: Admin,
     meta: "首页",
-    children:[{path:"goods-list",component:GoodsList,meta:"商品管理"},
-    {path:"category-list",component:CategoryList,meta:"栏目管理"}]
+    children: [{
+        path: "goods-list",
+        component: GoodsList,
+        meta: "商品管理"
+      },
+      {
+        path: "category-list",
+        component: CategoryList,
+        meta: "栏目管理"
+      },
+      {
+        path: "add/goods-add",
+        component: GoodListAdd,
+        meta: "新增列表"
+      },
+      {
+        path: "/admin/goods/edit/:id",
+        component: GoodsEdit,
+        meta: "编辑商品"
+      }
+    ]
   },
   {
     path: "/login",

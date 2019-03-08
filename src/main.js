@@ -12,6 +12,7 @@ const router = new VueRouter({
   routes
 })
 Vue.config.productionTip = false;
+axios.defaults.baseURL="http://127.0.0.1:8899";
 Vue.prototype.$axios = axios;
 
 

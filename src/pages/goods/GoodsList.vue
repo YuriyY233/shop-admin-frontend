@@ -19,14 +19,21 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column fixed prop="title" label="标题" width="200"></el-table-column>
+      <el-table-column fixed  label="标题" width="400">
+        <template slot-scope="scope">
+          <el-row type="flex" align="middle">
+            <img :src="scope.row.imgurl" alt="" class="goods-img">
+            <p>{{scope.row.title}}</p>
+          </el-row>
+        </template>
+      </el-table-column>
       <el-table-column prop="categoryname" label="类型" width="200"></el-table-column>
       <el-table-column label="价格" width="200">
         <template slot-scope="scope">{{scope.row.market_price | tofixed}}</template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.row.id)">编辑</el-button>
+          <el-button size="mini" @click="handleEdit(scope.row.id,scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
@@ -60,7 +67,7 @@ export default {
       pageSize: 5,
       searchvalue: "",
       totalCount: 0,
-      idStr:''
+      idStr: ""
     };
   },
   mounted() {
@@ -87,13 +94,20 @@ export default {
       var idArr = selection.map(v => {
         return v.id;
       });
-      this.idStr=idArr.join(",");
-    //   console.log(ids);
-
+      this.idStr = idArr.join(",");
+      //   console.log(ids);
     },
-    handleEdit(id) {
+    handleEdit(id,data) {
       // console.log(id);
-      this.$router.push(`http://localhost:8899/admin/goods/edit/${id}`);
+      this.$router.push(`/admin/goods/edit/${id}`);
+      // this.$axios({
+      //   method:"POST",
+      //   url:`/admin/goods/edit/${id}`,
+      //   data:data,
+      // }).then(res=>{
+      //   console.log(res);
+        
+      // })
     },
     handleDelete(ids) {
       //   console.log(ids);
@@ -106,7 +120,7 @@ export default {
       })
         .then(() => {
           this.$axios
-            .get(`http://localhost:8899/admin/goods/del/${ids}`)
+            .get(`/admin/goods/del/${ids}`)
             .then(res => {
               console.log(res);
               const { message } = res.data;
@@ -143,10 +157,9 @@ export default {
       this.pageIndex = 1;
       this.getList();
     },
-    handleAddGoods(){
-        this.$router.push(`http://localhost:8899/admin/add/goods`)
-    },
-    
+    handleAddGoods() {
+      this.$router.push(`/admin/add/goods-add`);
+    }
   },
 
   filters: {
@@ -158,4 +171,11 @@ export default {
 </script>
 
 <style>
+.goods-img{
+    width:64px;
+    height:64px;
+    display: block;
+    margin-right:10px;
+    flex-shrink: 0;
+  }
 </style>
