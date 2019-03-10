@@ -30,26 +30,29 @@ export default {
     submitForm(ruleForm2) {
       // console.log(ruleForm2);
 
-      this.$axios({
-        method: "post",
-        url: "/admin/account/login",
-        data: this.ruleForm2,
-        withCredentials: true
-      }).then(res => {
-        // console.log(res);
-        const { message, status } = res.data;
-        if (status == 0) {
-          this.$message({
-            message: "登录成功",
-            type: "success"
-          });
-          setTimeout(() => {
-              this.$router.back();
-          }, 1000);
-        } else {
-          this.$message.error(message);
-        }
-      });
+      // this.$axios({
+      //   method: "post",
+      //   url: "/admin/account/login",
+      //   data: this.ruleForm2,
+      //   withCredentials: true
+      // }).then(res => {
+      //   // console.log(res);
+      //   const { message, status } = res.data;
+      //   if (status == 0) {
+      //     this.$message({
+      //       message: "登录成功",
+      //       type: "success"
+      //     });
+      //     setTimeout(() => {
+      //         this.$router.back();
+      //     }, 1000);
+      //   } else {
+      //     this.$message.error(message);
+      //   }
+      // });
+      this.$store.dispatch("user/login",this.ruleForm2).then(res=>{
+        this.$router.back();
+      })
     },
     resetForm(formName) {
       this.ruleForm2 = {
